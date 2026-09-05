@@ -511,31 +511,31 @@
             <div class="form-grid">
               <label>
                 Name
-                <input type="text" name="name" autocomplete="name" required placeholder="Ihr vollständiger Name" />
+                <input type="text" name="name" autocomplete="name" placeholder="Ihr vollständiger Name" />
               </label>
               <label>
                 E-Mail
-                <input type="email" name="email" autocomplete="email" required placeholder="name@beispiel.de" />
+                <input type="email" name="email" autocomplete="email" placeholder="name@beispiel.de" />
               </label>
               <label>
                 Telefon
-                <input type="tel" name="phone" autocomplete="tel" required placeholder="+49 …" />
+                <input type="tel" name="phone" autocomplete="tel" placeholder="+49 …" />
               </label>
               <label>
                 Wunschdatum
-                <input type="date" name="date" required />
+                <input type="date" name="date" />
               </label>
               <label>
                 Service
-                <select name="service" id="service-select" required>
+                <select name="service" id="service-select">
                   <option value="standard">Standard — 79 €</option>
                   <option value="express">Express — 100 €</option>
                 </select>
               </label>
               <label>
                 Wohnungsgröße (ca.)
-                <select name="size" required>
-                  <option value="" disabled selected>Bitte wählen</option>
+                <select name="size">
+                  <option value="" selected>Bitte wählen</option>
                   <option value="studio">Studio / 1 Zimmer</option>
                   <option value="2-3">2–3 Zimmer</option>
                   <option value="4plus">4+ Zimmer</option>
@@ -612,10 +612,6 @@
 
       form.addEventListener("submit", function (e) {
         e.preventDefault();
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
         success.classList.add("is-visible");
         form.reset();
         selectService("standard");
