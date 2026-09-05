@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ilke — Verborgene Gegenstände finden</title>
+  <meta name="description" content="Ilke findet spitze und verborgene Gegenstände in Ihrer Wohnung. Express ab 100 €, Standard ab 79 €." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1c2420;
+      --ink-soft: #3d4a44;
+      --mist: #e8f0ec;
+      --foam: #f3f7f5;
+      --leaf: #2f6b55;
+      --leaf-deep: #1e4a3a;
+      --amber: #c47a2c;
+      --amber-hover: #a8641f;
+      --line: rgba(28, 36, 32, 0.12);
+      --shadow: 0 18px 50px rgba(30, 50, 40, 0.12);
+      --radius: 14px;
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "Outfit", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--foam);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ——— Hero ——— */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      align-items: end;
+      overflow: hidden;
+      color: #f7faf8;
+    }
+
+    .hero__media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.04);
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+
+    .hero__veil {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(18, 32, 28, 0.25) 0%, rgba(18, 32, 28, 0.55) 45%, rgba(14, 26, 22, 0.88) 100%),
+        radial-gradient(ellipse at 70% 20%, rgba(196, 122, 44, 0.18), transparent 50%);
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      width: min(920px, calc(100% - 2.5rem));
+      margin: 0 auto 4.5rem;
+      animation: rise 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .brand {
+      font-family: var(--font-display);
+      font-weight: 650;
+      font-size: clamp(3.4rem, 11vw, 6.5rem);
+      letter-spacing: -0.03em;
+      line-height: 0.95;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(1.45rem, 3.4vw, 2.15rem);
+      letter-spacing: -0.02em;
+      max-width: 16ch;
+      margin-bottom: 0.85rem;
+    }
+
+    .hero p {
+      font-weight: 300;
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      max-width: 34ch;
+      opacity: 0.9;
+      margin-bottom: 1.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 3rem;
+      padding: 0.85rem 1.45rem;
+      border: none;
+      border-radius: 999px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn--primary {
+      background: var(--amber);
+      color: #fff;
+      box-shadow: 0 10px 28px rgba(196, 122, 44, 0.35);
+    }
+
+    .btn--primary:hover {
+      background: var(--amber-hover);
+    }
+
+    .btn--ghost {
+      background: transparent;
+      color: var(--leaf-deep);
+      border: 1px solid var(--line);
+    }
+
+    .btn--ghost:hover {
+      background: rgba(47, 107, 85, 0.06);
+    }
+
+    /* ——— Sections ——— */
+    section {
+      padding: clamp(3.5rem, 8vw, 6rem) 0;
+    }
+
+    .wrap {
+      width: min(980px, calc(100% - 2.5rem));
+      margin: 0 auto;
+    }
+
+    .section-head {
+      max-width: 28rem;
+      margin-bottom: 2.25rem;
+      animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-weight: 650;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      margin-bottom: 0.65rem;
+    }
+
+    .section-head p {
+      color: var(--ink-soft);
+      font-weight: 300;
+      font-size: 1.05rem;
+    }
+
+    /* ——— Services ——— */
+    .services {
+      background:
+        radial-gradient(ellipse at 10% 0%, rgba(47, 107, 85, 0.08), transparent 45%),
+        linear-gradient(180deg, #eef4f1 0%, var(--foam) 100%);
+    }
+
+    .service-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 720px) {
+      .service-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+      }
+    }
+
+    .service {
+      text-align: left;
+      width: 100%;
+      padding: 1.6rem 1.5rem 1.5rem;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+      animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .service:nth-child(2) {
+      animation-delay: 0.12s;
+    }
+
+    .service:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .service.is-selected {
+      border-color: var(--leaf);
+      box-shadow: 0 0 0 3px rgba(47, 107, 85, 0.15), var(--shadow);
+    }
+
+    .service__tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--leaf);
+      margin-bottom: 0.7rem;
+    }
+
+    .service__title {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 650;
+      margin-bottom: 0.35rem;
+    }
+
+    .service__price {
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .service__price span {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--ink-soft);
+    }
+
+    .service__desc {
+      color: var(--ink-soft);
+      font-weight: 300;
+      font-size: 0.98rem;
+    }
+
+    /* ——— Booking ——— */
+    .booking {
+      background:
+        linear-gradient(160deg, #f7faf8 0%, #e7efe9 55%, #f2f6f3 100%);
+    }
+
+    .booking-panel {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 4px);
+      padding: clamp(1.4rem, 4vw, 2.25rem);
+      box-shadow: var(--shadow);
+      animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .form-grid .full {
+        grid-column: 1 / -1;
+      }
+    }
+
+    label {
+      display: grid;
+      gap: 0.4rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 2.85rem;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-weight: 400;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    textarea {
+      min-height: 6.5rem;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--leaf);
+      box-shadow: 0 0 0 3px rgba(47, 107, 85, 0.15);
+    }
+
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .selected-hint {
+      font-size: 0.92rem;
+      color: var(--ink-soft);
+      font-weight: 300;
+    }
+
+    .selected-hint strong {
+      color: var(--leaf-deep);
+      font-weight: 500;
+    }
+
+    .success {
+      display: none;
+      margin-top: 1.25rem;
+      padding: 1rem 1.1rem;
+      border-radius: 10px;
+      background: rgba(47, 107, 85, 0.1);
+      color: var(--leaf-deep);
+      font-weight: 400;
+    }
+
+    .success.is-visible {
+      display: block;
+      animation: rise 0.5s ease both;
+    }
+
+    /* ——— Footer ——— */
+    footer {
+      padding: 2rem 0 2.5rem;
+      border-top: 1px solid var(--line);
+      background: var(--foam);
+    }
+
+    footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem;
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    footer strong {
+      font-family: var(--font-display);
+      font-weight: 650;
+      color: var(--ink);
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes drift {
+      from {
+        transform: scale(1.04) translate3d(0, 0, 0);
+      }
+      to {
+        transform: scale(1.08) translate3d(-1.5%, -1%, 0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__media" aria-hidden="true">
+      <img
+        src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=2000&q=80"
+        alt=""
+      />
+      <div class="hero__veil"></div>
+    </div>
+    <div class="hero__content">
+      <p class="brand">Ilke</p>
+      <h1>Spitze und verborgene Gegenstände — gefunden.</h1>
+      <p>Sorgfältige Durchsicht Ihrer Wohnung, damit nichts Scharfes oder Verstecktes unerkannt bleibt.</p>
+      <a class="btn btn--primary" href="#buchen">Termin buchen</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="services" id="leistungen" aria-labelledby="leistungen-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="leistungen-title">Zwei Wege zur Klarheit</h2>
+          <p>Wählen Sie den Service, der zu Ihrem Tempo passt — beide mit demselben Blick fürs Detail.</p>
+        </div>
+
+        <div class="service-grid" role="list">
+          <button
+            type="button"
+            class="service is-selected"
+            data-service="standard"
+            data-label="Standard-Service"
+            data-price="79"
+            role="listitem"
+            aria-pressed="true"
+          >
+            <span class="service__tag">Empfohlen</span>
+            <h3 class="service__title">Standard</h3>
+            <p class="service__price">79 € <span>/ Termin</span></p>
+            <p class="service__desc">Gründliche Suche in Ihrer Wohnung nach spitzen und verborgenen Gegenständen — im regulären Terminfenster.</p>
+          </button>
+
+          <button
+            type="button"
+            class="service"
+            data-service="express"
+            data-label="Express-Service"
+            data-price="100"
+            role="listitem"
+            aria-pressed="false"
+          >
+            <span class="service__tag">Schnell</span>
+            <h3 class="service__title">Express</h3>
+            <p class="service__price">100 € <span>/ Termin</span></p>
+            <p class="service__desc">Priorisierte Bearbeitung mit bevorzugtem Termin — wenn es besonders zügig gehen soll.</p>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="booking" id="buchen" aria-labelledby="buchen-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="buchen-title">Termin anfragen</h2>
+          <p>Kurz ausfüllen — Ilke meldet sich zur Bestätigung Ihres Wunschtermins.</p>
+        </div>
+
+        <div class="booking-panel">
+          <form id="booking-form" novalidate>
+            <div class="form-grid">
+              <label>
+                Name
+                <input type="text" name="name" autocomplete="name" required placeholder="Ihr vollständiger Name" />
+              </label>
+              <label>
+                E-Mail
+                <input type="email" name="email" autocomplete="email" required placeholder="name@beispiel.de" />
+              </label>
+              <label>
+                Telefon
+                <input type="tel" name="phone" autocomplete="tel" required placeholder="+49 …" />
+              </label>
+              <label>
+                Wunschdatum
+                <input type="date" name="date" required />
+              </label>
+              <label>
+                Service
+                <select name="service" id="service-select" required>
+                  <option value="standard">Standard — 79 €</option>
+                  <option value="express">Express — 100 €</option>
+                </select>
+              </label>
+              <label>
+                Wohnungsgröße (ca.)
+                <select name="size" required>
+                  <option value="" disabled selected>Bitte wählen</option>
+                  <option value="studio">Studio / 1 Zimmer</option>
+                  <option value="2-3">2–3 Zimmer</option>
+                  <option value="4plus">4+ Zimmer</option>
+                </select>
+              </label>
+              <label class="full">
+                Adresse / Hinweise
+                <textarea name="notes" placeholder="Straße, Etage, besondere Hinweise …"></textarea>
+              </label>
+            </div>
+
+            <div class="form-actions full">
+              <button type="submit" class="btn btn--primary">Anfrage senden</button>
+              <p class="selected-hint">Gewählt: <strong id="selected-label">Standard-Service · 79 €</strong></p>
+            </div>
+
+            <div class="success" id="success" role="status" aria-live="polite">
+              Vielen Dank — Ihre Anfrage ist aufgenommen. Ilke meldet sich in Kürze bei Ihnen.
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p><strong>Ilke</strong> — findet, was verborgen bleibt.</p>
+      <p>Standard 79 € · Express 100 €</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const services = document.querySelectorAll(".service");
+      const select = document.getElementById("service-select");
+      const selectedLabel = document.getElementById("selected-label");
+      const form = document.getElementById("booking-form");
+      const success = document.getElementById("success");
+      const dateInput = form.querySelector('input[name="date"]');
+
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      dateInput.min = tomorrow.toISOString().split("T")[0];
+
+      function syncLabel(value) {
+        const map = {
+          standard: "Standard-Service · 79 €",
+          express: "Express-Service · 100 €",
+        };
+        selectedLabel.textContent = map[value] || map.standard;
+      }
+
+      function selectService(value) {
+        services.forEach(function (btn) {
+          const active = btn.dataset.service === value;
+          btn.classList.toggle("is-selected", active);
+          btn.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+        select.value = value;
+        syncLabel(value);
+      }
+
+      services.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          selectService(btn.dataset.service);
+          document.getElementById("buchen").scrollIntoView({ behavior: "smooth" });
+        });
+      });
+
+      select.addEventListener("change", function () {
+        selectService(select.value);
+      });
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+        success.classList.add("is-visible");
+        form.reset();
+        selectService("standard");
+      });
+    })();
+  </script>
+</body>
+</html>
