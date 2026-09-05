@@ -58,49 +58,51 @@
       position: relative;
       min-height: 100svh;
       display: grid;
-      align-items: end;
+      grid-template-rows: 1fr auto;
       overflow: hidden;
       color: var(--ink);
-      background: #f4ebe0;
+      background:
+        radial-gradient(ellipse at 50% 28%, #fffaf4 0%, #f3e6d6 55%, #ead9c8 100%);
     }
 
     .hero__media {
-      position: absolute;
-      inset: 0;
+      position: relative;
       z-index: 0;
+      min-height: 0;
+      display: grid;
+      place-items: center;
+      padding: 0.5rem 0.75rem 0;
     }
 
     .hero__media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 35%;
-      transform: scale(1.02);
-      animation: drift 18s ease-in-out infinite alternate;
+      width: min(100%, 760px);
+      height: auto;
+      max-height: min(70svh, 760px);
+      object-fit: contain;
+      object-position: center center;
+      animation: float-in 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     .hero__veil {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(180deg, rgba(244, 235, 224, 0.15) 0%, rgba(244, 235, 224, 0.35) 42%, rgba(244, 235, 224, 0.92) 72%, #f4ebe0 100%);
+      display: none;
     }
 
     .hero__content {
       position: relative;
       z-index: 1;
       width: min(920px, calc(100% - 2.5rem));
-      margin: 0 auto 3.5rem;
+      margin: 0 auto;
+      padding: 1rem 0 2.5rem;
       animation: rise 1s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     .brand {
       font-family: var(--font-display);
       font-weight: 650;
-      font-size: clamp(3.4rem, 11vw, 6.5rem);
+      font-size: clamp(2.8rem, 9vw, 5.5rem);
       letter-spacing: -0.03em;
       line-height: 0.95;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.85rem;
     }
 
     .hero h1 {
@@ -407,12 +409,14 @@
       }
     }
 
-    @keyframes drift {
+    @keyframes float-in {
       from {
-        transform: scale(1.04) translate3d(0, 0, 0);
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
       }
       to {
-        transform: scale(1.08) translate3d(-1.5%, -1%, 0);
+        opacity: 1;
+        transform: translateY(0) scale(1);
       }
     }
 
