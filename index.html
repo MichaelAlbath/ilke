@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ilke — Verborgene Gegenstände finden</title>
-  <meta name="description" content="Ilke findet spitze und verborgene Gegenstände in Ihrer Wohnung. Express ab 100 €, Standard ab 79 €." />
+  <title>ZOS — Zehengesteuertes Ortungssystem</title>
+  <meta name="description" content="Zehengesteuertes Ortungssystem (ZOS) findet spitze und verborgene Gegenstände in Ihrer Wohnung. Express ab 100 €, Standard ab 79 €." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -102,7 +102,16 @@
       font-size: clamp(2.8rem, 9vw, 5.5rem);
       letter-spacing: -0.03em;
       line-height: 0.95;
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .brand-full {
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      color: var(--ink-soft);
+      margin-bottom: 1rem;
     }
 
     .hero h1 {
@@ -114,7 +123,7 @@
       margin-bottom: 0.85rem;
     }
 
-    .hero p:not(.brand) {
+    .hero p:not(.brand):not(.brand-full) {
       font-weight: 300;
       font-size: clamp(1rem, 2vw, 1.15rem);
       max-width: 34ch;
@@ -440,7 +449,8 @@
       <div class="hero__veil" aria-hidden="true"></div>
     </div>
     <div class="hero__content">
-      <p class="brand">Ilke</p>
+      <p class="brand">ZOS</p>
+      <p class="brand-full">Zehengesteuertes Ortungssystem</p>
       <h1>Spitze und verborgene Gegenstände — gefunden.</h1>
       <p>Sorgfältige Durchsicht Ihrer Wohnung, damit nichts Scharfes oder Verstecktes unerkannt bleibt.</p>
       <a class="btn btn--primary" href="#buchen">Termin buchen</a>
@@ -493,7 +503,7 @@
       <div class="wrap">
         <div class="section-head">
           <h2 id="buchen-title">Termin anfragen</h2>
-          <p>Kurz ausfüllen — Ilke meldet sich zur Bestätigung Ihres Wunschtermins.</p>
+          <p>Kurz ausfüllen — ZOS meldet sich zur Bestätigung Ihres Wunschtermins.</p>
         </div>
 
         <div class="booking-panel">
@@ -543,7 +553,7 @@
             </div>
 
             <div class="success" id="success" role="status" aria-live="polite">
-              Vielen Dank — Ihre Anfrage ist aufgenommen. Ilke meldet sich in Kürze bei Ihnen.
+              Vielen Dank — Ihre Anfrage ist aufgenommen. ZOS meldet sich in Kürze bei Ihnen.
             </div>
           </form>
         </div>
@@ -553,7 +563,7 @@
 
   <footer>
     <div class="wrap">
-      <p><strong>Ilke</strong> — findet, was verborgen bleibt.</p>
+      <p><strong>ZOS</strong> — Zehengesteuertes Ortungssystem. Findet, was verborgen bleibt.</p>
       <p>Standard 79 € · Express 100 €</p>
     </div>
   </footer>
